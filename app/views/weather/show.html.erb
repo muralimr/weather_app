@@ -1,0 +1,15 @@
+<%# <h2>Weather Forecast</h2>
+
+<%# if @from_cache %>
+  <%# <p><strong>Note:</strong> Data is from cache.</p> %>
+<%# end %>
+
+<ul>
+  <%# <li><strong>Location:</strong> <%#= @forecast[:location] %></li> %>
+  <%# <li><strong>Current Temp:</strong> <%#= @forecast[:temperature] %>°F</li> %>
+  <%# <li><strong>High:</strong> <%#= @forecast[:high] %>°F</li> %>
+  <%# <li><strong>Low:</strong> <%#= @forecast[:low] %>°F</li> %>
+  <li><strong>Conditions:</strong> <%#= @forecast[:description].capitalize %></li>
+</ul>
+
+<%#= link_to "Search Again", root_path %> %>

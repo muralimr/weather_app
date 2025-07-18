@@ -1,0 +1,25 @@
+<div class="container">
+	
+		<h1>Weather Forecast</h1>
+		<%= form_with url: "/forecast", method: :post, local: true do |f| %>
+		 <div class="row"> <%= label_tag :address, "Enter Address" %></div>
+		 <div class="row"> <%= select_tag :address, options_for_select(['New York', 'Chennai', 'Bengaluru'], params[:address]) %>
+		 <%= submit_tag "Forecast" %></div>
+		<% end %>
+	
+
+		<% if @weather['main'] %>
+
+		 <p>Current Weather in <%= @city %> </p>
+		 <p>Temperature: <%= @weather['main']['temp'] - 273.15 %>°C</p>
+		 <p>Humidity: <%= @weather['main']['humidity'] %> </p>
+		 <p>minimum: <%= @weather['main']['temp_min'] - 273.15 %> </p>
+		 <p>Maximum: <%= @weather['main']['temp_max'] - 273.15 %> </p>
+		<p> <%#= @weather.to_json %> </p> 
+		 <p>Current weather: <%= @weather["weather"][0]["main"] %> </p>
+		 <p>Wind Speed: <%= @weather['wind']['speed'] * 3.6 %> km/h </p>
+		<% else %>
+		 	<code>  </code>
+		<% end %>
+	
+</div>
