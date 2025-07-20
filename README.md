@@ -27,4 +27,9 @@ Things you may want to cover:
 
 rails s
 
+enter zip code and country code option choose, in default india country code has been choosed
+we have option to choose india and USA country code
+enter based on those zip code
 bundle exec rspec spec/services/weather_api_spec.rb
+
+

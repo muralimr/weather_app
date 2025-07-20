@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'webmock/rspec'
 
 RSpec.describe WeatherApi do
-  describe "#weather_by_city" do
+  describe "#weather_by_zip" do
     let(:zip_code) { "12345" }
     let(:country_code) { "us" }
     let(:api_key) { "test_api_key" }
@@ -27,7 +27,7 @@ RSpec.describe WeatherApi do
     end
 
     it "makes a request to the weather API with the correct zip" do
-      response = WeatherApi.new.weather_by_city(zip_code, country_code)
+      response = WeatherApi.new.weather_by_zip(zip_code, country_code)
       expect(response.parsed_response["name"]).to eq("Testville")
     end
   end

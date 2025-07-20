@@ -20,13 +20,13 @@ RSpec.describe WeatherController, type: :controller do
 
     before do
       allow(WeatherApi).to receive(:new).and_return(mock_api)
-      allow(mock_api).to receive(:weather_by_city).with("12345", "us").and_return(mock_weather_data)
+      allow(mock_api).to receive(:weather_by_zip).with("12345", "us").and_return(mock_weather_data)
 
       get :index, params: { zip: "12345", country_code: "us" }
     end
 
     it "calls the weather API with zip and country_code" do
-      expect(mock_api).to have_received(:weather_by_city).with("12345", "us")
+      expect(mock_api).to have_received(:weather_by_zip).with("12345", "us")
     end
 
     it "assigns @weather with the API result" do
