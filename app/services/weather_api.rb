@@ -8,8 +8,8 @@ class WeatherApi
     @options = { query: { appid: api_key } }
   end
 
-  def weather_by_city(city)
-    self.class.get("/weather?q=#{city}", @options)
+  def weather_by_city(zip_code = 560038, country_code = 'in')
+    self.class.get("/weather?zip=#{zip_code},#{country_code}", @options)
   end
 
 

@@ -1,25 +1,44 @@
-<div class="container">
-	
-		<h1>Weather Forecast</h1>
-		<%= form_with url: "/forecast", method: :post, local: true do |f| %>
-		 <div class="row"> <%= label_tag :address, "Enter Address" %></div>
-		 <div class="row"> <%= select_tag :address, options_for_select(['New York', 'Chennai', 'Bengaluru'], params[:address]) %>
-		 <%= submit_tag "Forecast" %></div>
-		<% end %>
-	
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-		<% if @weather['main'] %>
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header text-center">
+      <h1>🌦 Weather Forecast</h1>
+    </div>
 
-		 <p>Current Weather in <%= @city %> </p>
-		 <p>Temperature: <%= @weather['main']['temp'] - 273.15 %>°C</p>
-		 <p>Humidity: <%= @weather['main']['humidity'] %> </p>
-		 <p>minimum: <%= @weather['main']['temp_min'] - 273.15 %> </p>
-		 <p>Maximum: <%= @weather['main']['temp_max'] - 273.15 %> </p>
-		<p> <%#= @weather.to_json %> </p> 
-		 <p>Current weather: <%= @weather["weather"][0]["main"] %> </p>
-		 <p>Wind Speed: <%= @weather['wind']['speed'] * 3.6 %> km/h </p>
-		<% else %>
-		 	<code>  </code>
-		<% end %>
-	
+    <div class="card-body">
+      <%= form_with url: "/forecast", method: :post, local: true, class: "row g-3 align-items-end" do |f| %>
+        <div class="col-md-4">
+          <%= label_tag :zip, "Enter ZIP Code", class: "form-label" %>
+          <%= text_field_tag :zip, params[:zip], class: "form-control", required: true %>
+        </div>
+
+        <div class="col-md-4">
+          <%= label_tag :country_code, "Select Country", class: "form-label" %>
+          <%= select_tag :country_code, options_for_select(['us', 'in'], params[:country_code]), class: "form-select" %>
+        </div>
+
+        <div class="col-md-4">
+          <%= submit_tag "Get Forecast", class: "btn btn-primary w-100" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @weather && @weather['main'] %>
+    <div class="card mt-4">
+      <div class="card-body">
+        <h4 class="card-title">Weather in <%= @city %></h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">🌡 Temperature: <%= (@weather['main']['temp'] - 273.15).round(1) %> °C</li>
+          <li class="list-group-item">💧 Humidity: <%= @weather['main']['humidity'] %>%</li>
+          <li class="list-group-item">🌡 Min: <%= (@weather['main']['temp_min'] - 273.15).round(1) %> °C</li>
+          <li class="list-group-item">🌡 Max: <%= (@weather['main']['temp_max'] - 273.15).round(1) %> °C</li>
+          <li class="list-group-item">📍 Location: <%= @weather['name'] %></li>
+          <li class="list-group-item">🌤 Condition: <%= @weather["weather"][0]["main"] %></li>
+          <li class="list-group-item">💨 Wind Speed: <%= (@weather['wind']['speed'] * 3.6).round(1) %> km/h</li>
+        </ul>
+      </div>
+    </div>
+  <% end %>
 </div>

@@ -1,25 +1,40 @@
 require 'rails_helper'
 
 RSpec.describe WeatherController, type: :controller do
-  describe 'GET #index' do
-    let(:mock_response) do
-      double("HTTParty::Response", code: 200, parsed_response: { "weather" => [{ "main" => "Cloudy" }] })
+  describe "GET #index" do
+    let(:mock_weather_data) do
+      {
+        "main" => {
+          "temp" => 300.15,
+          "humidity" => 65,
+          "temp_min" => 295.15,
+          "temp_max" => 305.15
+        },
+        "name" => "Test City",
+        "weather" => [{ "main" => "Clear" }],
+        "wind" => { "speed" => 5.5 }
+      }
     end
+
+    let(:mock_api) { instance_double(WeatherApi) }
 
     before do
-      allow_any_instance_of(WeatherApi).to receive(:weather_by_city).and_return(mock_response)
+      allow(WeatherApi).to receive(:new).and_return(mock_api)
+      allow(mock_api).to receive(:weather_by_city).with("12345", "us").and_return(mock_weather_data)
+
+      get :index, params: { zip: "12345", country_code: "us" }
     end
 
-    it 'assigns a default city when none is provided' do
-      get :index
-      expect(assigns(:city)).to eq('New York')
-      expect(assigns(:weather)).to eq(mock_response)
+    it "calls the weather API with zip and country_code" do
+      expect(mock_api).to have_received(:weather_by_city).with("12345", "us")
     end
 
-    it 'assigns a specific city when provided' do
-      get :index, params: { address: 'Los Angeles' }
-      expect(assigns(:city)).to eq('Los Angeles')
-      expect(assigns(:weather)).to eq(mock_response)
+    it "assigns @weather with the API result" do
+      expect(assigns(:weather)).to eq(mock_weather_data)
+    end
+
+    it "responds with success" do
+      expect(response).to have_http_status(:ok)
     end
   end
 end

@@ -2,8 +2,9 @@ require 'httparty'
 
 class WeatherController < ApplicationController
   def index
-    @city = params[:address] ? params[:address] : 'New York' 
-    @weather = api_obj.weather_by_city(@city)
+    zip = params[:zip]
+    country_code = params[:country_code] 
+    @weather = api_obj.weather_by_city(zip, country_code)
   end
 
   private
