@@ -14,7 +14,7 @@ class WeatherController < ApplicationController
   end
 
   def cache_key
-    "weather_#{zip_code}_#{country_code}"
+    "weather_#{zip_code}"
   end
 
   def zip_code

@@ -40,7 +40,7 @@ gem "thruster", require: false
 gem 'httparty'
 gem 'dotenv-rails', groups: [:development, :test]
 gem "geocoder"
-
+gem 'redis'
 # gem 'bootstrap', '~> 5.2', '>= 5.2.3'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
